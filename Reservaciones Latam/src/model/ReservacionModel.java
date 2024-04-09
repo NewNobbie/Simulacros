@@ -68,11 +68,11 @@ public class ReservacionModel implements CRUD {
 
         try {
             //3. Write query into sql
-            String sql = "SELECt u* FROM reservacion;";
+            String sql = "SELECT * FROM reservacion;";
             //4. Use PrepareStatement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
-            //5. Execute query and obtain nect resul (ResultSet)
+            //5. Execute query and obtain next resul (ResultSet)
             ResultSet objResult = objPrepare.executeQuery();
 
             //6. While as there is a result do the nex
@@ -104,7 +104,7 @@ public class ReservacionModel implements CRUD {
         //1. Open COnnection
         Connection objConnection = ConfigDB.openConnection();
 
-        //2. Convert to Booiking
+        //2. Convert to Booking
         Reservacion objReservacion = (Reservacion) obj;
 
         //3. Variable for know status of connection
@@ -116,7 +116,7 @@ public class ReservacionModel implements CRUD {
 
             //5. Create Statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
-            //6. Assign vakue to parameters of query
+            //6. Assign value to parameters of query
             objPrepare.setInt(1, objReservacion.getId_pasajero_reservacion());
             objPrepare.setInt(2, objReservacion.getId_vuelo_reservacion());
             objPrepare.setString(3, objReservacion.getFecha_reservacion());
@@ -143,7 +143,7 @@ public class ReservacionModel implements CRUD {
     @Override
     public boolean delete(Object obj) {
         //1. Convert to entity
-        Reservacion objReservacion = new Reservacion();
+        Reservacion objReservacion = (Reservacion) obj;
 
         //2. Open Connection
         Connection objConnection = ConfigDB.openConnection();
@@ -164,10 +164,12 @@ public class ReservacionModel implements CRUD {
             //7. Execute query (executeUpdate) return number of registers affected
             int totalRowsAffected = objPrepare.executeUpdate();
 
+            JOptionPane.showMessageDialog(null, "Hola");
             //If rows > 0 is ready deleted
             if (totalRowsAffected >0){
+
                 isDeleted=true;
-                JOptionPane.showMessageDialog(null, "The update was successful!");
+                JOptionPane.showMessageDialog(null, "Successfully removed!");
             }
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -186,7 +188,7 @@ public class ReservacionModel implements CRUD {
 
         try {
             //3. Statement sql
-            String sql = "SELECt * FROM reservacion WHERE id_reservacion =?:";
+            String sql = "SELECT * FROM reservacion WHERE id_reservacion =?;";
             //4. Prepare Statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
@@ -211,31 +213,35 @@ public class ReservacionModel implements CRUD {
         return objReservacion;
     }
 
-    public Object findByFly(int id_vuelo_reservaciones){
+    public List<Object> findByFly(String text){
         // Open Connection
         Connection objConnection = ConfigDB.openConnection();
 
         Reservacion objReservacion = null;
+
+        List<Object> list = new ArrayList<>();
         try {
             //Statement sql
-            String sql = "SELECT * FROM reservaciones WHERE id_vuelo_reservacion = ?;";
+            String sql = "SELECT * FROM reservacion INNER JOIN vuelo WHERE vuelo.destino LIKE ?;";
 
             //Prepare Statement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
 
             //Posible Parseada a futuro
-            objPrepare.setString(1, "%"+id_vuelo_reservaciones+"%");
+            objPrepare.setString(1, "%"+text+"%");
 
             ResultSet objResult = objPrepare.executeQuery();
 
             while (objResult.next()){
                 objReservacion = new Reservacion();
-                objReservacion.setId_reservacion(objResult.getInt("id_servacion"));
+                objReservacion.setId_reservacion(objResult.getInt("id_reservacion"));
                 objReservacion.setId_pasajero_reservacion(objResult.getInt("id_pasajero_fk"));
                 objReservacion.setId_vuelo_reservacion(objResult.getInt("id_vuelo_fk"));
                 objReservacion.setFecha_reservacion(objResult.getString("fecha_reservacion"));
+                objReservacion.setDestino(objResult.getString("destino"));
                 objReservacion.setAsiento(objResult.getString("asiento"));
 
+                list.add(objReservacion);
             }
 
         }catch (Exception e){
@@ -243,6 +249,6 @@ public class ReservacionModel implements CRUD {
         }
 
         ConfigDB.closeConnection();
-        return objReservacion;
+        return list;
     }
 }

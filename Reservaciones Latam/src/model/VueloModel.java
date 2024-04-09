@@ -72,7 +72,7 @@ public class VueloModel implements CRUD {
 
         try {
             //3. query sql
-            String sql = "SELECT * FROm vuelo;";
+            String sql = "SELECT * FROM vuelo;";
             //4. Use prepapreStatement
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
             //5. Execute and obtain result (ResultSet)
@@ -85,7 +85,7 @@ public class VueloModel implements CRUD {
                 Vuelo objVuelo = new Vuelo();
 
                 objVuelo.setId_vuelo(objResult.getInt("id_vuelo"));
-                objVuelo.setDestion(objResult.getString("destion"));
+                objVuelo.setDestion(objResult.getString("destino"));
                 objVuelo.setFecha_salida(objResult.getString("fecha_salida"));
                 objVuelo.setHora_salida(objResult.getString("hora_salida"));
                 objVuelo.setId_avion_vuelo(objResult.getInt("id_avion_fk"));
@@ -155,7 +155,7 @@ public class VueloModel implements CRUD {
 
         try {
             //4. Write SQL
-            String sql = "DELEte FROM value WHERE id_vuelo = ?;";
+            String sql = "DELETE FROM vuelo WHERE id_vuelo = ?;";
 
             //5. Create prepare statement
             PreparedStatement objPrepare =objConnection.prepareStatement(sql);
@@ -201,9 +201,10 @@ public class VueloModel implements CRUD {
             //6. Execute query
             ResultSet objResult = objPrepare.executeQuery();
             if (objResult.next()){
+                objVuelo = new Vuelo();
                 objVuelo.setId_vuelo(objResult.getInt("id_vuelo"));
                 objVuelo.setDestion(objResult.getString("destino"));
-                objVuelo.setFecha_salida(objResult.getString("hora_salida"));
+                objVuelo.setFecha_salida(objResult.getString("fecha_salida"));
                 objVuelo.setHora_salida(objResult.getString("hora_salida"));
                 objVuelo.setId_avion_vuelo(objResult.getInt("id_avion_fk"));
             }
@@ -217,7 +218,7 @@ public class VueloModel implements CRUD {
     public List<Vuelo> findByDestination(String destino){
         //Create List
         List<Vuelo> listVuelo = new ArrayList<>();
-        // Open COnnection
+        // Open Connection
         Connection objConnection = ConfigDB.openConnection();
 
         try {

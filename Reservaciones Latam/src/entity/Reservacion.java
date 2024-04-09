@@ -7,16 +7,18 @@ public class Reservacion {
     private int id_vuelo_reservacion;
     private String fecha_reservacion;
     private String asiento;
+    private String destino;
 
     public Reservacion() {
     }
 
-    public Reservacion(int id_reservacion, int id_pasajero_reservacion, int id_vuelo_reservacion, String fecha_reservacion, String asiento) {
+    public Reservacion(int id_reservacion, int id_pasajero_reservacion, int id_vuelo_reservacion, String fecha_reservacion, String asiento, String destino) {
         this.id_reservacion = id_reservacion;
         this.id_pasajero_reservacion = id_pasajero_reservacion;
         this.id_vuelo_reservacion = id_vuelo_reservacion;
         this.fecha_reservacion = fecha_reservacion;
         this.asiento = asiento;
+        this.destino = destino;
     }
 
     public int getId_reservacion() {
@@ -39,6 +41,10 @@ public class Reservacion {
         return asiento;
     }
 
+    public String getDestino() {
+        return destino;
+    }
+
     public void setId_reservacion(int id_reservacion) {
         this.id_reservacion = id_reservacion;
     }
@@ -59,6 +65,10 @@ public class Reservacion {
         this.asiento = asiento;
     }
 
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+
     @Override
     public String toString() {
         return "Reservacion{" +
@@ -67,6 +77,7 @@ public class Reservacion {
                 ", id_vuelo_reservacion=" + id_vuelo_reservacion +
                 ", fecha_reservacion='" + fecha_reservacion + '\'' +
                 ", asiento='" + asiento + '\'' +
+                ", destino='" + destino + '\'' +
                 '}';
     }
 }

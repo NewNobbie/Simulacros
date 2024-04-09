@@ -85,7 +85,7 @@ public class PasajeroModel implements CRUD {
                 objPasajero.setId_pasajero(objResult.getInt("id_pasajero"));
                 objPasajero.setNombre(objResult.getString("nombre"));
                 objPasajero.setApellido(objResult.getString("apellido"));
-                objPasajero.setDocumento_identidad(objResult.getString("documento_identidas"));
+                objPasajero.setDocumento_identidad(objResult.getString("documento_identidad"));
 
                 //6.2 Add Passenger to the lisst
                 listPasajeros.add(objPasajero);
@@ -120,7 +120,7 @@ public class PasajeroModel implements CRUD {
             objPrepare.setString(1, objPasajero.getNombre());
             objPrepare.setString(2, objPasajero.getApellido());
             objPrepare.setString(3, objPasajero.getDocumento_identidad());
-            objPrepare.setInt(5, objPasajero.getId_pasajero());
+            objPrepare.setInt(4, objPasajero.getId_pasajero());
 
             //7. Execute query
             int totalRowsAffected = objPrepare.executeUpdate();
@@ -151,7 +151,7 @@ public class PasajeroModel implements CRUD {
 
         try {
             //4. Write SQL
-             String sql = "DELETE FROM pasajero WHERE id_pasajer =?;";
+             String sql = "DELETE FROM pasajero WHERE id_pasajero =?;";
 
              //5. Create prepare statement
             PreparedStatement objPrepare  = objConnection.prepareStatement(sql);

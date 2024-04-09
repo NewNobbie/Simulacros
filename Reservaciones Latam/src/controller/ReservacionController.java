@@ -39,16 +39,16 @@ public class ReservacionController {
         int Id_pasajero = 0;
         for (Object i : listPasajeros) {
             Pasajero pasajero = (Pasajero) i;
-            String full_info_pasajero = pasajero.getNombre() + " " + pasajero.getApellido() + " " + pasajero.getId_pasajero();
+            String full_info_pasajero = pasajero.getNombre() + " " + pasajero.getApellido();
             if (full_info_pasajero.equals(input1)) {
                 Id_pasajero = pasajero.getId_pasajero();
             }
         }
 
         for (Object i2 : listVuelos) {
-            JOptionPane.showMessageDialog(null, "Focus brad");
             Vuelo vuelo = (Vuelo) i2;
             num2[c2] = vuelo.getDestion() + " " + vuelo.getFecha_salida() + " " + vuelo.getHora_salida() + " " + vuelo.getId_avion_vuelo();
+            c2++;
         }
 
         String input2 = (String) JOptionPane.showInputDialog(null, "\n select a fly...", "Fly available", JOptionPane.QUESTION_MESSAGE, null, num2, num2[0]);
@@ -99,7 +99,7 @@ public class ReservacionController {
         ReservacionModel objModel = new ReservacionModel();
 
         String listReservaciones = " Bookings List: \n";
-        for (Object i: objModel.findAll()){
+        for (Object i: objModel.findByFly(destino)){
             Reservacion reservacion = (Reservacion) i;
             listReservaciones+=reservacion.toString()+"\n";
         }
@@ -117,7 +117,7 @@ public class ReservacionController {
         String list = getAllString();
         int idUpdated = Integer.parseInt(JOptionPane.showInputDialog(list +"\n Enter the ID of the Booking: "));
 
-        Reservacion objReservacion = objReservacionModel.findById(idUpdated);
+        Reservacion objReservacion = (Reservacion) objReservacionModel.findById(idUpdated);
 
         Pasajero objPasajero = objPasajeroModel.findById(objReservacion.getId_pasajero_reservacion());
         Vuelo objVuelo = objVueloModel.findById(objReservacion.getId_vuelo_reservacion());
@@ -133,11 +133,11 @@ public class ReservacionController {
             int c2=0;
             for (Object i: listPasajeros){
                 Pasajero pasajero = (Pasajero) i;
-                ele1[c1] = pasajero.getNombre()+" "+pasajero.getApellido()+" "+pasajero.getDocumento_identidad();
+                ele1[c1] = pasajero.getNombre()+" "+pasajero.getApellido();
                 c1++;
             }
 
-            String full_info_pasajero = objPasajero.getNombre()+" "+objPasajero.getApellido()+" "+objPasajero.getDocumento_identidad();
+            String full_info_pasajero = objPasajero.getNombre()+" "+objPasajero.getApellido();
             String full_info_vuelo = objVuelo.getDestion()+" "+objVuelo.getFecha_salida()+" "+objVuelo.getHora_salida()+" "+objVuelo.getId_avion_vuelo();
 
             String input1 = (String) JOptionPane.showInputDialog(null, "\n select a passenger...", "passenger registered \n"+ full_info_pasajero+"passenger available", JOptionPane.QUESTION_MESSAGE,null, ele1,ele1[0]);
@@ -145,7 +145,7 @@ public class ReservacionController {
             int Id_pasajero = 0;
             for (Object i2: listPasajeros){
                 Pasajero pasajero = (Pasajero) i2;
-                String full_info_pasa = pasajero.getNombre()+" "+pasajero.getApellido()+" "+pasajero.getDocumento_identidad();
+                String full_info_pasa = pasajero.getNombre()+" "+pasajero.getApellido();
                 if (full_info_pasa.equals(input1)){
                     Id_pasajero = pasajero.getId_pasajero();
                 }
@@ -153,7 +153,7 @@ public class ReservacionController {
 
             for (Object i3: listVuelos){
                 Vuelo vuelo = (Vuelo) i3;
-                ele2[c2] = vuelo.getDestion()+" "+ vuelo.getHora_salida()+" "+vuelo.getId_avion_vuelo();
+                ele2[c2] = vuelo.getDestion()+" "+vuelo.getFecha_salida()+" "+vuelo.getHora_salida()+" "+vuelo.getId_avion_vuelo();
                 c2++;
             }
 
@@ -162,7 +162,8 @@ public class ReservacionController {
             int Id_Vuelo=0;
             for (Object i4: listVuelos){
                 Vuelo vuelo = (Vuelo) i4;
-                if (full_info_vuelo.equals(input2)){
+                String full_info_vu = vuelo.getDestion()+" "+vuelo.getFecha_salida()+" "+vuelo.getHora_salida()+" "+vuelo.getId_avion_vuelo();
+                if (full_info_vu.equals(input2)){
                     Id_Vuelo = vuelo.getId_vuelo();
                 }
             }
@@ -187,7 +188,7 @@ public class ReservacionController {
 
         Reservacion objReservacion = objModel.findById(isDeleted);
         int confirm=1;
-        if (objModel == null){
+        if (objReservacion == null){
             JOptionPane.showInputDialog(null, "Booking not founded...");
         }else {
             confirm = JOptionPane.showConfirmDialog(null, "Are u sure want to delete the Booking?\n"+objReservacion.toString());

@@ -196,7 +196,8 @@ public class AvionModel implements CRUD {
 
             //6. Execute query
             ResultSet objResult = objPrepare.executeQuery();
-            if (objResult.next()){
+            while (objResult.next()){
+                objAvion = new Avion();
                 objAvion.setId_avion(objResult.getInt("id_avion"));
                 objAvion.setModelo(objResult.getString("modelo"));
                 objAvion.setCapacidad(objResult.getInt("capacidad"));
@@ -225,6 +226,7 @@ public class AvionModel implements CRUD {
             ResultSet objResult = objPrepare.executeQuery();
 
             while (objResult.next()){
+                JOptionPane.showMessageDialog(null, "hola");
                 Avion objAvion = new Avion();
                 objAvion.setId_avion(objResult.getInt("id_avion"));
                 objAvion.setModelo(objResult.getString("modelo"));

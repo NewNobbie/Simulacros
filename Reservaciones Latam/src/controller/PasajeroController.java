@@ -78,11 +78,14 @@ public class PasajeroController {
          PasajeroModel objModel = new PasajeroModel();
 
          String listString = " RESULTS \n";
-         for (Pasajero i: objModel.findByName(nombre)){
-             listString += i.toString()+ "\n";
-         }
-
-         JOptionPane.showMessageDialog(null, listString);
+        if (objModel.findByName(nombre).isEmpty()){
+            JOptionPane.showMessageDialog(null, "Passenger not founded");
+        }else {
+             for (Pasajero i: objModel.findByName(nombre)){
+                 listString += i.toString()+ "\n";
+             }
+            JOptionPane.showMessageDialog(null, listString);
+        }
     }
 
     public static void update(){

@@ -68,13 +68,14 @@ public class AvionController {
     }
 
     public static void getByname(){
-        String model = JOptionPane.showInputDialog("Insert the Plane model to serach: ");
+        String model = JOptionPane.showInputDialog("Insert the Plane model to search: ");
         AvionModel objModel = new AvionModel();
 
         String listString = " RESULTS \n";
         for (Avion i: objModel.findByModelo(model)){
             listString += i.toString() +"\n";
         }
+        JOptionPane.showMessageDialog(null, listString);
     }
 
     public static void update(){

@@ -114,10 +114,12 @@ public class Main {
                     break;
                 case "6":
                     JOptionPane.showMessageDialog(null, "Returning to the main menu...");
+                    break;
                 default:
                     JOptionPane.showMessageDialog(null, "Invalid option...");
+                    break;
             }
-        }while (!option.equals("5"));
+        }while (!option.equals("6"));
     }
 
     public static void menu_flight(){
@@ -132,6 +134,7 @@ public class Main {
                     3) Update Flight
                     4) Delete Flight
                     5) Search Flight by Destinations
+                    6) Return to Main Menu
                     """);
             switch (option){
                 case "1":
@@ -151,6 +154,7 @@ public class Main {
                     break;
                 case "6":
                     JOptionPane.showMessageDialog(null, "Returning to the main menu...");
+                    break;
                 default:
                     JOptionPane.showMessageDialog(null, "Invalid option...");
             }
